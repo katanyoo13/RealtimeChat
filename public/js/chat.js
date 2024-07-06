@@ -1,11 +1,23 @@
 $(document).ready(function() {
     let selectedUser = null;
 
-    // Get username from localStorage and set it in the dropdown
-    const username = localStorage.getItem('username');
-    if (username) {
-        $('#userMenu').text(username); // แสดงชื่อผู้ใช้ในปุ่ม Dropdown
-    }
+    // Fetch current user from API and set it in the dropdown
+    $.ajax({
+        type: 'GET',
+        url: '/api/currentUser',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function(user) {
+            console.log('Current user:', user);
+            if (user && user.username) {
+                $('#userMenu').text(user.username); // แสดงชื่อผู้ใช้ในปุ่ม Dropdown
+            }
+        },
+        error: function(error) {
+            console.error('Error fetching current user:', error);
+        }
+    });
 
     // Function to append user to the list
     function appendUser(user) {
