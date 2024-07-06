@@ -13,12 +13,15 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     localStorage.setItem('token', response.token);
-                    localStorage.setItem('username', username); // เก็บชื่อผู้ใช้ใน localStorage
                     localStorage.setItem('role', response.role);
+                    localStorage.setItem('username', username); // เก็บชื่อผู้ใช้ไว้ใน localStorage
+
                     if (response.role === 'admin') {
                         window.location.href = 'dashboard.html';
-                    } else {
+                    } else if (response.role === 'user') {
                         window.location.href = 'chat.html';
+                    } else {
+                        alert('You are not authorized to access this page.');
                     }
                 } else {
                     alert(response.message);

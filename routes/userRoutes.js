@@ -53,11 +53,28 @@ router.post('/login', async (req, res) => {
 
     console.log('User found:', user); // เพิ่มการตรวจสอบ
     const token = jwt.sign({ id: user._id, role: user.role }, jwtSecret, { expiresIn: '1h' });
-    res.json({ success: true, token, role: user.role });
+    res.json({ success: true, token, role: user.role, username: user.username });
   } catch (error) {
     console.error('Error details:', error); // แสดงข้อผิดพลาดในคอนโซล
     res.status(500).json({ success: false, message: 'Error logging in', error: error.message || error });
   }
+});
+
+// Get current user route
+router.get('/currentUser', (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    jwt.verify(token, jwtSecret, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        User.findById(decoded.id, 'username')
+            .then(user => {
+                res.json(user);
+            })
+            .catch(error => {
+                res.status(500).json({ message: 'Error fetching user', error: error.message || error });
+            });
+    });
 });
 
 // Get all users route
