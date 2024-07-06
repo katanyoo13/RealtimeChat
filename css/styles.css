@@ -1,0 +1,166 @@
+body {
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.card-header {
+    background-color: #2C3E50;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.btn-primary {
+    background-color: #3498DB;
+    border-color: #3498DB;
+}
+
+.btn-primary:hover {
+    background-color: #2980B9;
+    border-color: #2980B9;
+}
+
+.btn-secondary {
+    background-color: #2C3E50;
+    border-color: #2C3E50;
+}
+
+.btn-secondary:hover {
+    background-color: #1A242F;
+    border-color: #1A242F;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: white;
+}
+
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #555;
+    color: white;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.text-center a {
+    color: #3498DB;
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    color: #2980B9;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+.bg-dark {
+    background-color: #2C3E50 !important;
+}
+
+.bg-chat {
+    background-color: #1A242F !important;
+}
+
+.list-group-item-action:hover {
+    background-color: #3498DB !important;
+    color: white !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+h1, p {
+    color: #3498DB;
+}
+
+#sidebar {
+    height: 100vh;
+    background-color: #2C3E50;
+}
+
+.sidebar-heading {
+    background-color: #2C3E50;
+}
+
+.list-group-item-action:hover {
+    background-color: #3498DB !important;
+    color: white !important;
+}
+
+#messages {
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+.message.sent {
+    background-color: #3498DB;
+    color: white;
+    text-align: right;
+}
+
+.message.received {
+    background-color: #95A5A6;
+    color: white;
+    text-align: left;
+}
+
+.input-group {
+    align-items: center;
+}
+
+.input-group .form-control {
+    border-radius: 0;
+}
+
+.input-group .btn {
+    border-radius: 0;
+}
