@@ -3,7 +3,7 @@ const ChatMessage = require('../models/ChatMessage');
 const User = require('../models/User');
 const router = express.Router();
 
-// บันทึกข้อความแชท
+// Save chat message
 router.post('/messages', async (req, res) => {
     const { sender, receiver, message } = req.body;
 
@@ -21,7 +21,7 @@ router.post('/messages', async (req, res) => {
     }
 });
 
-// ดึงข้อความแชทระหว่างผู้ใช้สองคน
+// Fetch chat messages between two users
 router.get('/messages/:userId1/:userId2', async (req, res) => {
     const { userId1, userId2 } = req.params;
 
