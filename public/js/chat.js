@@ -5,7 +5,7 @@ $(document).ready(function() {
     // Get username from localStorage and set it in the dropdown
     const username = localStorage.getItem('username');
     if (username) {
-        $('#userMenu').text(username); // แสดงชื่อผู้ใช้ในปุ่ม Dropdown
+        $('#userMenu').text(username); // Display the logged-in username
     }
 
     // Fetch current user profile picture and set currentUser
@@ -16,7 +16,7 @@ $(document).ready(function() {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         success: function(user) {
-            currentUser = user.username;
+            currentUser = user;
             const profileImagePath = user.profilePicture ? `uploads/${user.profilePicture}` : 'uploads/default.png';
             $('#userProfileImage').attr('src', profileImagePath);
 
@@ -34,9 +34,9 @@ $(document).ready(function() {
             type: 'GET',
             url: '/api/users',
             success: function(users) {
-                console.log('Fetched users:', users); // เพิ่มการตรวจสอบ
+                console.log('Fetched users:', users); // Log the fetched users
                 users.forEach(user => {
-                    if (user.username !== currentUser) {
+                    if (user._id !== currentUser._id) { // Avoid showing the current user
                         appendUser(user);
                     }
                 });
@@ -75,19 +75,22 @@ $(document).ready(function() {
         // Clear current messages
         $('#messages').empty();
 
-        // Fetch messages from API (dummy implementation)
-        const messages = [
-            { sender: 'you', text: 'Hello!', type: 'sent' },
-            { sender: 'friend', text: 'Hi there!', type: 'received' }
-        ];
-
-        // Append messages
-        messages.forEach(msg => appendMessage(msg));
+        // Fetch messages from API
+        $.ajax({
+            type: 'GET',
+            url: `/api/messages/${currentUser._id}/${userId}`,
+            success: function(messages) {
+                messages.forEach(msg => appendMessage(msg));
+            },
+            error: function(error) {
+                console.error('Error fetching messages:', error);
+            }
+        });
     }
 
     // Function to append message
     function appendMessage(message) {
-        const messageElement = $('<div>').addClass('message').addClass(message.type).text(message.text);
+        const messageElement = $('<div>').addClass('message').addClass(message.sender === currentUser._id ? 'sent' : 'received').text(message.message);
         $('#messages').append(messageElement);
         $('#messages').scrollTop($('#messages')[0].scrollHeight);
     }
@@ -108,12 +111,25 @@ $(document).ready(function() {
     function sendMessage() {
         const messageText = $('#messageInput').val();
         if (messageText.trim() !== '') {
-            const message = { sender: 'you', text: messageText, type: 'sent' };
-            appendMessage(message);
-            $('#messageInput').val('');
+            const message = {
+                sender: currentUser._id,
+                receiver: selectedUser._id,
+                message: messageText
+            };
 
-            // Here you would send the message to the server and to the selected user
-            console.log('Sending message to', selectedUser.username, ':', messageText);
+            $.ajax({
+                type: 'POST',
+                url: '/api/messages',
+                data: JSON.stringify(message),
+                contentType: 'application/json',
+                success: function(savedMessage) {
+                    appendMessage(savedMessage);
+                    $('#messageInput').val('');
+                },
+                error: function(error) {
+                    console.error('Error sending message:', error);
+                }
+            });
         }
     }
 
