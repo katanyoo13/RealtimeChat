@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes'); // เพิ่มการ import เส้นทางแชท
 const path = require('path');
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // ให้บริการไฟล์จากโฟลเดอร์ uploads
 
 app.use('/api', userRoutes); // ใช้เส้นทาง /api สำหรับ userRoutes
+app.use('/api', chatRoutes); // ใช้เส้นทาง /api สำหรับ chatRoutes
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
