@@ -13,8 +13,7 @@
             <!-- Sidebar -->
             <div class="col-md-3 p-0" id="sidebar">
                 <div class="sidebar-heading text-center py-4 text-white" style="background-color: #2C3E50;">
-                    <img src="bg.jpg" alt="Logo" class="img-fluid" style="width: 50px;">
-                    <h5>Realtime Chat</h5>
+                    <img src="n.png" alt="Logo" class="img-fluid" style="width: 280px;">
                 </div>
                 <div class="list-group list-group-flush" id="userList">
                     <!-- Users will be appended here -->
@@ -24,16 +23,14 @@
             <div class="col-md-9 p-0 d-flex flex-column">
                 <!-- Header -->
                 <div class="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center border-bottom">
-                    <div class="d-flex align-items-center">
-                        <img src="user.png" alt="User" class="rounded-circle me-2" style="width: 40px;">
-                        <h5 class="mb-0" id="chatHeader">Select a user to chat</h5>
-                    </div>
-                    <div class="dropdown">
+                    <h5 class="mb-0" id="chatHeader">Select a user to chat</h5>
+                    <div class="dropdown d-flex align-items-center">
+                        <img id="userProfileImage" src="user.png" alt="User" class="rounded-circle me-2" style="width: 40px;">
                         <button class="btn btn-dark text-white dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            Username
+                            
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
                             <li><a class="dropdown-item" id="logoutButton" href="#">Logout</a></li>
                         </ul>
                     </div>

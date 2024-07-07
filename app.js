@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost:27017/chatapp')
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // ให้บริการไฟล์จากโฟลเดอร์ uploads
 
 app.use('/api', userRoutes); // ใช้เส้นทาง /api สำหรับ userRoutes
 

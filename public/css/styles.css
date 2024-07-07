@@ -166,3 +166,47 @@ h1, p {
 .input-group .btn {
     border-radius: 0;
 }
+
+/* เพิ่มการตั้งค่า CSS สำหรับหน้าโปรไฟล์ */
+#profileImage {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card {
+    background-color: #2C3E50;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.card-header, .card-footer {
+    background-color: #3498DB;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.card-header h5, .card-footer button {
+    color: white;
+}
+
+.form-control {
+    background-color: #1C2833;
+    border: none;
+    color: white;
+}
+
+.list-group-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+#userProfileImage {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
