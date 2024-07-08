@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let selectedUser = null;
     let currentUser = null;
+    const socket = io(); // Initialize Socket.IO
 
     // Get username from localStorage and set it in the dropdown
     const username = localStorage.getItem('username');
@@ -98,6 +99,15 @@ $(document).ready(function() {
         $('#messages').scrollTop($('#messages')[0].scrollHeight);
     }
 
+    // Listen for new messages from the server
+    socket.on('message', function(message) {
+        console.log('New message received:', message);
+        if ((message.sender === currentUser._id && message.receiver === selectedUser._id) || 
+            (message.sender === selectedUser._id && message.receiver === currentUser._id)) {
+            appendMessage(message);
+        }
+    });
+
     // Send message on button click
     $('#sendMessageButton').click(function() {
         sendMessage();
@@ -126,7 +136,8 @@ $(document).ready(function() {
                 data: JSON.stringify(message),
                 contentType: 'application/json',
                 success: function(savedMessage) {
-                    appendMessage(savedMessage);
+                    console.log('Message sent:', savedMessage);
+                    socket.emit('sendMessage', savedMessage); // Emit the message event to the server
                     $('#messageInput').val('');
                 },
                 error: function(error) {

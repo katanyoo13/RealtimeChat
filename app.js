@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const chatRoutes = require('./routes/chatRoutes'); // Include chatRoutes
 const path = require('path');
+const http = require('http'); // Add this line
+const socketIo = require('socket.io'); // Add this line
 
 const app = express();
+const server = http.createServer(app); // Change this line
+const io = socketIo(server); // Add this line
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/chatapp')
@@ -19,5 +23,18 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve f
 app.use('/api', userRoutes); // Use /api for userRoutes
 app.use('/api', chatRoutes); // Use /api for chatRoutes
 
+// Handle socket connection
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    socket.on('sendMessage', (message) => {
+        console.log('Message received on server:', message);
+        io.emit('message', message);
+    });
+});
+
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Change this line
