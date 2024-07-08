@@ -262,17 +262,29 @@ h1, p {
     max-width: 70%;
     padding: 10px;
     border-radius: 10px;
+    word-wrap: break-word;
+    background-color: #95A5A6;
+    color: white;
 }
 
-.message-content.sent {
+.message-container.sent .message-content {
     background-color: #3498DB;
     color: white;
     margin-left: auto;
 }
 
-.message-content.received {
+.message-container.received .message-content {
     background-color: #95A5A6;
     color: white;
+}
+.message-container.sent {
+    justify-content: flex-end;
+    flex-direction: row-reverse; /* Reverse the row direction */
+}
+
+.message-container.sent img {
+    margin-left: 10px;
+    margin-right: 0; /* Adjust margins */
 }
 
 .input-container {

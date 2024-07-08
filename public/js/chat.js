@@ -90,8 +90,11 @@ $(document).ready(function() {
 
     // Function to append message
     function appendMessage(message) {
-        const messageElement = $('<div>').addClass('message').addClass(message.sender === currentUser._id ? 'sent' : 'received').text(message.message);
-        $('#messages').append(messageElement);
+        const messageContainer = $('<div>').addClass('message-container').addClass(message.sender === currentUser._id ? 'sent' : 'received');
+        const profileImage = $('<img>').attr('src', message.sender === currentUser._id ? `uploads/${currentUser.profilePicture}` : `uploads/${selectedUser.profilePicture}`).addClass('rounded-circle');
+        const messageContent = $('<div>').addClass('message-content').addClass(message.sender === currentUser._id ? 'sent' : 'received').text(message.message);
+        messageContainer.append(profileImage).append(messageContent);
+        $('#messages').append(messageContainer);
         $('#messages').scrollTop($('#messages')[0].scrollHeight);
     }
 
