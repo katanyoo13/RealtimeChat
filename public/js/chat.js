@@ -3,12 +3,6 @@ $(document).ready(function() {
     let currentUser = null;
     const socket = io(); // Initialize Socket.IO
 
-    // Get username from localStorage and set it in the dropdown
-    const username = localStorage.getItem('username');
-    if (username) {
-        $('#userMenu').text(username); // Display the logged-in username
-    }
-
     // Fetch current user profile picture and set currentUser
     $.ajax({
         type: 'GET',
@@ -18,7 +12,15 @@ $(document).ready(function() {
         },
         success: function(user) {
             currentUser = user;
-            const profileImagePath = user.profilePicture ? `uploads/${user.profilePicture}` : 'uploads/default.png';
+            localStorage.setItem('username', user.username); // Set username in localStorage
+            $('#userMenu').text(user.username); // Display the logged-in username
+
+            let profileImagePath;
+            if (user.profilePicture) {
+                profileImagePath = `uploads/${user.profilePicture}`;
+            } else {
+                profileImagePath = user.role === 'admin' ? 'uploads/default_admin.png' : 'uploads/default_user.png';
+            }
             $('#userProfileImage').attr('src', profileImagePath);
 
             // Fetch users only after we have the current user information
@@ -37,7 +39,7 @@ $(document).ready(function() {
             success: function(users) {
                 console.log('Fetched users:', users); // Log the fetched users
                 users.forEach(user => {
-                    if (user._id !== currentUser._id) { // Avoid showing the current user
+                    if (user._id !== currentUser._id && user.role !== 'admin') { // Avoid showing the current user and admin
                         appendUser(user);
                     }
                 });
@@ -50,7 +52,12 @@ $(document).ready(function() {
 
     // Function to append user to the list
     function appendUser(user) {
-        const profileImagePath = user.profilePicture ? `uploads/${user.profilePicture}` : 'uploads/default.png';
+        let profileImagePath;
+        if (user.profilePicture) {
+            profileImagePath = `uploads/${user.profilePicture}`;
+        } else {
+            profileImagePath = user.role === 'admin' ? 'uploads/default_admin.png' : 'uploads/default_user.png';
+        }
         const userElement = $('<a>').addClass('list-group-item list-group-item-action bg-dark text-white d-flex align-items-center')
             .text(user.username);
         const profileImage = $('<img>').addClass('rounded-circle me-2').attr('src', profileImagePath).css({

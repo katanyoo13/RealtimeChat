@@ -6,12 +6,12 @@ const User = require('../models/User');
 const path = require('path');
 
 const router = express.Router();
-const jwtSecret = 'your_secret_key'; // เปลี่ยนเป็นคีย์ลับของคุณ
+const jwtSecret = 'your_secret_key';
 
-// ตั้งค่าการอัพโหลดไฟล์
+// Set up file upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, path.join(__dirname, '..', 'uploads')); // แก้ไขเส้นทางตรงนี้
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: 'User created' });
     } catch (error) {
-        console.error('Error details:', error); // แสดงข้อผิดพลาดในคอนโซล
+        console.error('Error details:', error);
         res.status(500).json({ message: 'Error registering user', error: error.message || error });
     }
 });
@@ -64,11 +64,10 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
 
-        console.log('User found:', user); // เพิ่มการตรวจสอบ
         const token = jwt.sign({ id: user._id, role: user.role }, jwtSecret, { expiresIn: '1h' });
         res.json({ success: true, token, role: user.role, username: user.username });
     } catch (error) {
-        console.error('Error details:', error); // แสดงข้อผิดพลาดในคอนโซล
+        console.error('Error details:', error);
         res.status(500).json({ success: false, message: 'Error logging in', error: error.message || error });
     }
 });
@@ -93,7 +92,7 @@ router.get('/currentUser', (req, res) => {
 // Get all users route
 router.get('/users', async (req, res) => {
     try {
-        const users = await User.find({}, 'username profilePicture');
+        const users = await User.find({}, 'username email role profilePicture');
         res.json(users);
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -101,8 +100,8 @@ router.get('/users', async (req, res) => {
     }
 });
 
-// Update profile route
-router.post('/updateProfile', upload.single('profilePicture'), async (req, res) => {
+// Update profile route for admin
+router.post('/updateAdminProfile', upload.single('profilePicture'), async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, jwtSecret, async (err, decoded) => {
         if (err) {
@@ -120,6 +119,69 @@ router.post('/updateProfile', upload.single('profilePicture'), async (req, res) 
             res.status(500).json({ message: 'Error updating profile', error: error.message || error });
         }
     });
+});
+
+// Update profile route for user
+router.post('/updateUserProfile', upload.single('profilePicture'), async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    jwt.verify(token, jwtSecret, async (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        try {
+            const updatedData = { username: req.body.username };
+            if (req.file) {
+                updatedData.profilePicture = req.file.filename;
+            }
+            const updatedUser = await User.findByIdAndUpdate(decoded.id, updatedData, { new: true });
+            res.json({ message: 'Profile updated', user: updatedUser });
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            res.status(500).json({ message: 'Error updating profile', error: error.message || error });
+        }
+    });
+});
+
+// Get single user route
+router.get('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id, 'username email role profilePicture');
+        res.json(user);
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Error fetching user', error: error.message || error });
+    }
+});
+
+// Update user route
+router.put('/users/:id', async (req, res) => {
+    try {
+        const { username, email, role } = req.body;
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, { username, email, role }, { new: true });
+        res.json({ message: 'User updated', user: updatedUser });
+
+        // Check if the current logged-in user role was changed
+        if (req.user.id === req.params.id && req.user.role !== role) {
+            // If role was changed, send a flag to logout and re-login
+            res.json({ message: 'User updated', user: updatedUser, logout: true });
+        } else {
+            res.json({ message: 'User updated', user: updatedUser });
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ message: 'Error updating user', error: error.message || error });
+    }
+});
+
+// Delete user route
+router.delete('/users/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.json({ message: 'User deleted' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Error deleting user', error: error.message || error });
+    }
 });
 
 module.exports = router;
