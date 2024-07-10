@@ -277,6 +277,7 @@ h1, p {
     background-color: #95A5A6;
     color: white;
 }
+
 .message-container.sent {
     justify-content: flex-end;
     flex-direction: row-reverse; /* Reverse the row direction */
@@ -311,4 +312,62 @@ h1, p {
     padding: 10px 20px;
     border-radius: 20px;
     color: white;
+}
+
+.modal-content {
+    background-color: #2C3E50;
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #3498DB;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom: none;
+}
+
+.modal-title {
+    color: white;
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+.modal-body {
+    background-color: #2C3E50;
+    color: white;
+}
+
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #555;
+    color: white;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn-primary {
+    background-color: #3498DB;
+    border-color: #3498DB;
+}
+
+.btn-primary:hover {
+    background-color: #2980B9;
+    border-color: #2980B9;
+}
+
+.btn-secondary {
+    background-color: #2C3E50;
+    border-color: #2C3E50;
+}
+
+.btn-secondary:hover {
+    background-color: #1A242F;
+    border-color: #1A242F;
 }

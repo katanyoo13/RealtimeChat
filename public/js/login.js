@@ -17,7 +17,7 @@ $(document).ready(function() {
                     localStorage.setItem('username', username); // เก็บชื่อผู้ใช้ไว้ใน localStorage
 
                     if (response.role === 'admin') {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = 'admin_dashboard.html';
                     } else if (response.role === 'user') {
                         window.location.href = 'chat.html';
                     } else {
@@ -34,3 +34,4 @@ $(document).ready(function() {
         });
     });
 });
+

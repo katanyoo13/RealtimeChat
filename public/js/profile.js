@@ -15,6 +15,7 @@ $(document).ready(function() {
             $('#username').val(user.username);
             const profileImagePath = user.profilePicture ? `uploads/${user.profilePicture}` : 'uploads/default.png';
             $('#userProfileImage').attr('src', profileImagePath); // ปรับเส้นทางรูปภาพ
+            localStorage.setItem('role', user.role); // เก็บ role ของผู้ใช้ใน localStorage
         },
         error: function(error) {
             console.error('Error fetching user:', error);
@@ -24,10 +25,18 @@ $(document).ready(function() {
     $('#profileForm').submit(function(e) {
         e.preventDefault();
         const formData = new FormData(this);
+        const role = localStorage.getItem('role'); // ดึง role ของผู้ใช้จาก localStorage
+
+        let updateUrl;
+        if (role === 'admin') {
+            updateUrl = '/api/updateAdminProfile';
+        } else {
+            updateUrl = '/api/updateUserProfile';
+        }
 
         $.ajax({
             type: 'POST',
-            url: '/api/updateProfile',
+            url: updateUrl,
             headers: {
                 'Authorization': `Bearer ${token}`
             },
