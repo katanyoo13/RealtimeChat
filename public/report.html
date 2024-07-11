@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container report-container">
+        <div class="card report-card">
+            <div class="card-header report-card-header">
+                User Report
+            </div>
+            <div class="card-body">
+                <form id="reportForm">
+                    <div class="form-group report-form-group">
+                        <label for="reportType">Report Type:</label>
+                        <select id="reportType" name="reportType" class="form-control report-form-control">
+                            <option value="bug">Bug</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group report-form-group">
+                        <label for="reportDescription">Description:</label>
+                        <textarea id="reportDescription" name="reportDescription" class="form-control report-form-control" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary report-btn-primary">Submit Report</button>
+                </form>
+            </div>
+            <div class="card-footer report-card-footer">
+                <button onclick="window.location.href='chat.html'" class="btn btn-secondary report-btn-secondary">Back to Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
