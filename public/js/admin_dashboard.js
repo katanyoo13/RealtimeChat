@@ -121,12 +121,48 @@ $(document).ready(function() {
         $('#mainContent > div').not('#userManagementContent').hide();
     });
 
-    $('#statisticsLink').click(function() {
-        $('#pageHeader').text('Statistics/Reports');
-        $('#userManagementContent').hide();
-        // Add other content sections as needed
-    });
 
+    $(document).ready(function() {
+        // Existing code...
+    
+        // Function to fetch reports and display in the Reports tab
+        function fetchReports() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/reports',
+                success: function(reports) {
+                    $('#reportsTableBody').empty(); // Clear the table body
+                    reports.forEach(report => appendReport(report));
+                },
+                error: function(error) {
+                    console.error('Error fetching reports:', error);
+                }
+            });
+        }
+    
+        // Function to append report to the table
+        function appendReport(report) {
+            const reportRow = `
+                <tr>
+                    <td>${report.type}</td>
+                    <td>${report.description}</td>
+                    <td>${new Date(report.created_at).toLocaleString()}</td>
+                </tr>
+            `;
+            $('#reportsTableBody').append(reportRow);
+        }
+    
+        // Call fetchReports when Reports tab is clicked
+        $('#statisticsLink').click(function() {
+            $('#pageHeader').text('Reports');
+            $('#userManagementContent').hide();
+            $('#reportsContent').show();
+            fetchReports(); // Fetch reports when tab is clicked
+        });
+    
+        // Existing code...
+    });
+    
 
 
     // Logout function

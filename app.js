@@ -2,14 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
-const chatRoutes = require('./routes/chatRoutes'); // Include chatRoutes
+const chatRoutes = require('./routes/chatRoutes');
+const reportRoutes = require('./routes/reportRoutes'); // Add this line
 const path = require('path');
-const http = require('http'); // Add this line
-const socketIo = require('socket.io'); // Add this line
+const http = require('http');
+const socketIo = require('socket.io');
 
 const app = express();
-const server = http.createServer(app); // Change this line
-const io = socketIo(server); // Add this line
+const server = http.createServer(app);
+const io = socketIo(server);
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/chatapp')
@@ -18,10 +19,11 @@ mongoose.connect('mongodb://localhost:27017/chatapp')
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve files from uploads folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api', userRoutes); // Use /api for userRoutes
-app.use('/api', chatRoutes); // Use /api for chatRoutes
+app.use('/api', userRoutes);
+app.use('/api', chatRoutes);
+app.use('/api', reportRoutes); // Add this line
 
 // Handle socket connection
 io.on('connection', (socket) => {
@@ -37,4 +39,4 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Change this line
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
