@@ -161,3 +161,23 @@ $(document).ready(function() {
         window.location.href = 'login.html';
     });
 });
+
+$(document).ready(function() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const username = localStorage.getItem('username');
+    if (username) {
+        $('#userMenu').text(username); // Display the logged-in username
+    }
+
+    // Navigate to report page
+    $('#reportLink').click(function() {
+        window.location.href = 'report.html';
+    });
+
+    // Existing code...
+});

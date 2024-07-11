@@ -127,11 +127,7 @@ $(document).ready(function() {
         // Add other content sections as needed
     });
 
-    $('#settingsLink').click(function() {
-        $('#pageHeader').text('Settings');
-        $('#userManagementContent').hide();
-        // Add other content sections as needed
-    });
+
 
     // Logout function
     $('#logoutButton, #logoutButtonDropdown').click(function() {

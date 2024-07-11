@@ -20,15 +20,16 @@ body {
     height: 100%;
 }
 
-.card {
-    background-color: rgba(0, 0, 0, 0.7);
+.card, .report-card {
+    background-color: #2C3E50; /* Updated to match both cards */
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    width: 400px;
 }
 
-.card-header {
-    background-color: #2C3E50;
+.card-header, .report-card-header {
+    background-color: #3498DB; /* Updated to match both headers */
     color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -36,6 +37,14 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 0;
+}
+
+.card-footer, .report-card-footer {
+    background-color: #3498DB; /* Updated to match both footers */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 10px 0;
+    text-align: center;
 }
 
 .btn-primary {
@@ -62,6 +71,7 @@ body {
     font-weight: bold;
     color: white;
 }
+
 
 .form-control {
     background-color: rgba(255, 255, 255, 0.1);
@@ -183,7 +193,7 @@ h1, p {
 }
 
 .card-header, .card-footer {
-    background-color: #3498DB;
+    background-color: #2C3E50;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -193,6 +203,8 @@ h1, p {
 .card-header h5, .card-footer button {
     color: white;
 }
+
+
 
 .form-control {
     background-color: #1C2833;
@@ -315,7 +327,7 @@ h1, p {
 }
 
 .modal-content {
-    background-color: #2C3E50;
+    background-color:  #2C3E50;
     color: white;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -368,6 +380,81 @@ h1, p {
 }
 
 .btn-secondary:hover {
+    background-color: #1A242F;
+    border-color: #1A242F;
+}
+
+
+/* Adjust dropdown style for report type */
+.report-form-control {
+    background-color: #1C2833; /* Background color of the dropdown */
+    color: white; /* Text color of the dropdown */
+    border: 1px solid #555; /* Border color of the dropdown */
+}
+
+.report-form-control option {
+    background-color: #1C2833; /* Background color of the options */
+    color: white; /* Text color of the options */
+}
+
+.report-form-control:focus {
+    background-color: #1C2833; /* Background color when focused */
+    color: white; /* Text color when focused */
+}
+
+.report-form-control option:focus {
+    background-color: #2C3E50; /* Background color of the focused option */
+    color: white; /* Text color of the focused option */
+}
+
+/* Ensure dropdown matches card style */
+.report-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.report-card {
+    background-color: #2C3E50;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.report-card-header, .report-card-footer {
+    background-color: #2C3E50;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.report-card-header h5, .report-card-footer button {
+    color: white;
+}
+
+.report-form-group label {
+    color: white;
+    font-weight: bold;
+}
+
+.report-btn-primary {
+    background-color: #3498DB;
+    border-color: #3498DB;
+}
+
+.report-btn-primary:hover {
+    background-color: #2980B9;
+    border-color: #2980B9;
+}
+
+.report-btn-secondary {
+    background-color: #2C3E50;
+    border-color: #2C3E50;
+}
+
+.report-btn-secondary:hover {
     background-color: #1A242F;
     border-color: #1A242F;
 }
