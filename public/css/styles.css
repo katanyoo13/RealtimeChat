@@ -458,3 +458,10 @@ h1, p {
     background-color: #1A242F;
     border-color: #1A242F;
 }
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
